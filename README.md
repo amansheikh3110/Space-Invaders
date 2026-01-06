@@ -88,4 +88,16 @@ The built files will be in the `dist` folder.
 - Pause functionality
 
 Enjoy the game! 🎮
+-Gameplay Screenshots
+<img width="1912" height="929" alt="image" src="https://github.com/user-attachments/assets/9aa943f1-8351-4000-a9c6-8b96e49ccf09" />
+
+
+
+<img width="1909" height="907" alt="image" src="https://github.com/user-attachments/assets/a302f2c5-bc19-40e8-8201-51fc175e892e" />
+
+
+
+<img width="1909" height="907" alt="image" src="https://github.com/user-attachments/assets/d7b6a299-e435-4af5-aab9-57f7b6c5ae3b" />
+
+
 
