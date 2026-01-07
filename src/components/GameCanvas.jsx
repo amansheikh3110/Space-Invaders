@@ -21,6 +21,12 @@ function GameCanvas({
   const gameOverRef = useRef(gameOver)
   const levelCompleteRef = useRef(false)
   const lastFrameTimeRef = useRef(0)
+  const soundsRef = useRef({
+    playerGun: null,
+    alienGun: null,
+    gameOver: null,
+    gameWin: null
+  })
   const gameStateRef = useRef({
     player: null,
     aliens: [],
@@ -47,11 +53,28 @@ function GameCanvas({
     if (gameOver && gameStateRef.current.animationId) {
       cancelAnimationFrame(gameStateRef.current.animationId)
       gameStateRef.current.animationId = null
+      // Play game over sound when game ends
+      if (soundsRef.current.gameOver) {
+        soundsRef.current.gameOver.currentTime = 0
+        soundsRef.current.gameOver.play().catch(() => {}) // Ignore autoplay errors
+      }
     }
   }, [gameOver])
 
   useEffect(() => {
     if (!mountRef.current) return
+
+    // Load sound effects
+    soundsRef.current.playerGun = new Audio('/assets/player_gun_sound.mp3')
+    soundsRef.current.alienGun = new Audio('/assets/alien_gun_sound.mp3')
+    soundsRef.current.gameOver = new Audio('/assets/game_over_SI.mp3')
+    soundsRef.current.gameWin = new Audio('/assets/game_win_SI.mp3')
+    
+    // Set volume levels
+    soundsRef.current.playerGun.volume = 0.5
+    soundsRef.current.alienGun.volume = 0.4
+    soundsRef.current.gameOver.volume = 0.6
+    soundsRef.current.gameWin.volume = 0.6
 
     // Initialize Three.js scene
     const scene = new THREE.Scene()
@@ -330,6 +353,11 @@ function GameCanvas({
     if (keys[' '] && now - state.lastShot > 200) {
       state.lastShot = now
       createBullet(player.x, player.y + 0.5, true)
+      // Play player gun sound
+      if (soundsRef.current.playerGun) {
+        soundsRef.current.playerGun.currentTime = 0
+        soundsRef.current.playerGun.play().catch(() => {}) // Ignore autoplay errors
+      }
     }
 
     // Update player bullets (moving up)
@@ -419,6 +447,11 @@ function GameCanvas({
         if (Math.random() < 0.0012 && now - state.lastAlienShot > 300) {
           state.lastAlienShot = now
           createBullet(bottomAlien.x, bottomAlien.y - 0.5, false)
+          // Play alien gun sound
+          if (soundsRef.current.alienGun) {
+            soundsRef.current.alienGun.currentTime = 0
+            soundsRef.current.alienGun.play().catch(() => {}) // Ignore autoplay errors
+          }
         }
       }
     })
@@ -443,6 +476,11 @@ function GameCanvas({
     // Check win condition - all aliens destroyed
     if (aliveAliens.length === 0 && !levelCompleteRef.current) {
       levelCompleteRef.current = true
+      // Play game win sound
+      if (soundsRef.current.gameWin) {
+        soundsRef.current.gameWin.currentTime = 0
+        soundsRef.current.gameWin.play().catch(() => {}) // Ignore autoplay errors
+      }
       onLevelComplete()
     }
   }
