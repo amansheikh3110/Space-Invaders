@@ -26,6 +26,8 @@ An amazing, modern take on the classic Space Invaders game built with React, Thr
 
 ### Installation
 
+
+
 1. Install dependencies:
 ```bash
 npm install
