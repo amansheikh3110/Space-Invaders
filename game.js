@@ -52,7 +52,7 @@ function gameLoop() {
 
 gameLoop();
 
-// ================== UPDATE ==================
+// ================== UPDATE ADDED ==================
 function update() {
   // Player movement
   if (keys["ArrowLeft"] && player.x > 0) player.x -= player.speed;
